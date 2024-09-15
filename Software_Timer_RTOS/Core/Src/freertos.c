@@ -108,9 +108,9 @@ void MX_FREERTOS_Init(void) {
 	
  /* Create the timer(s) (FreeRTOS APIs) */
   Timer_ThreeHandle = xTimerCreate("Timer3",pdMS_TO_TICKS(100),pdTRUE,( void * ) 3,MyTimer_Callback);
-  Timer_ThreeHandle = xTimerCreate("Timer4",pdMS_TO_TICKS(200),pdTRUE,( void * ) 4,MyTimer_Callback);
-	Timer_ThreeHandle = xTimerCreate("Timer5",pdMS_TO_TICKS(300),pdTRUE,( void * ) 5,MyTimer_Callback);
-	Timer_ThreeHandle = xTimerCreate("Timer6",pdMS_TO_TICKS(400),pdTRUE,( void * ) 6,MyTimer_Callback);
+  Timer_FourHandle = xTimerCreate("Timer4",pdMS_TO_TICKS(200),pdTRUE,( void * ) 4,MyTimer_Callback);
+  Timer_FiveHandle = xTimerCreate("Timer5",pdMS_TO_TICKS(300),pdTRUE,( void * ) 5,MyTimer_Callback);
+  Timer_SixHandle = xTimerCreate("Timer6",pdMS_TO_TICKS(400),pdTRUE,( void * ) 6,MyTimer_Callback);
   /* USER CODE BEGIN RTOS_TIMERS */
   /* start timers, add new ones, ... */
   /* USER CODE END RTOS_TIMERS */
@@ -143,12 +143,17 @@ void MX_FREERTOS_Init(void) {
 void TaskOne(void *argument)
 {
   /* USER CODE BEGIN TaskOne */
+	BaseType_t TimerStartRetVal = 0;
 	
 	// Start Timers Using CMSIS 
 	osTimerStart(Timer_OneHandle,100);
-	osTimerStart(Timer_TwoHandle,100);
+	osTimerStart(Timer_TwoHandle,1000);
 	
-	// Start Timers Using FreeRTOS APIs
+	// Start Timers Using FreeRTOS APIs	
+	TimerStartRetVal = xTimerStart(Timer_ThreeHandle, 0);
+	TimerStartRetVal = xTimerStart(Timer_FourHandle, 0);
+	TimerStartRetVal = xTimerStart(Timer_FiveHandle, 0);
+	TimerStartRetVal = xTimerStart(Timer_SixHandle, 0);
 	
   /* Infinite loop */
   for(;;)
